@@ -1,0 +1,5 @@
+# This is the configuration file.
+# It is automatically generated.
+# Add users with /changename <name> <newname>
+# Remove users with /resetname <name>
+version: 0.1

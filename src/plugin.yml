@@ -1,0 +1,19 @@
+name: IdentityCrisis
+version: 0.1
+author: jamietech
+website: 'http://nekotech.tk'
+main: tk.nekotech.identitycrisis.IdentityCrisis
+commands:
+  changename:
+    usage: /<command> <username> <newname>
+    description: Change a user's (possibly yours) username
+    permission: identitycrisis.use
+    permission-message: "You don't have access to that command"
+  resetname:
+    usage: /<command> <username>
+    description: Reset a user's (possibly yours) username
+    permission: identitycrisis.use
+    permission-message: "You don't have access to that command"
+permissions:
+  identitycrisis.use:
+    description: Use the plugin
