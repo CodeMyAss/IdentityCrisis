@@ -2,6 +2,7 @@ package tk.nekotech.identitycrisis;
 
 import java.util.HashMap;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -51,7 +52,7 @@ public class IdentityCrisis extends JavaPlugin {
 		Player player = this.getServer().getPlayerExact(oldName);
 		if (player != null) {
 			TagAPI.refreshPlayer(player);
-			player.setPlayerListName(newName);
+			player.setPlayerListName(ChatColor.translateAlternateColorCodes('&', newName));
 		}
 	}
 	
