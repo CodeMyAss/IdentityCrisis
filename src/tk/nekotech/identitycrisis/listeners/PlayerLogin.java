@@ -1,6 +1,5 @@
 package tk.nekotech.identitycrisis.listeners;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -17,9 +16,8 @@ public class PlayerLogin implements Listener {
 	
 	@EventHandler
 	public void onPlayerLogin(PlayerLoginEvent event) {
-		Player player = event.getPlayer();
-		String name = player.getName();
-		String newName = plugin.getConfig().getString("names." + player);
+		String name = event.getPlayer().getName();
+		String newName = plugin.getDefinedName(name);
 		if (newName != null) {
 			try {
 				plugin.addNameChange(name, newName);
