@@ -52,11 +52,24 @@ public class IdentityCrisis extends JavaPlugin {
         this.getLogger().info("Changed " + nameChanges.size() + " players names this session!");
     }
 
+    /**
+     * Returns the defined name of the user.
+     * If not set, returns normal name.
+     * @param oldName
+     * @return
+     */
     public String getDefinedName(String oldName) {
         String newName = this.getConfig().getString("names." + oldName);
         return (newName == null ? oldName : newName);
     }
 
+    /**
+     * Adds a name change for defined user.
+     * <b>Saved to configuration immediately.</b>
+     * @param oldName
+     * @param newName
+     * @throws TooBigException
+     */
     public void addNameChange(String oldName, String newName) throws TooBigException {
         if (newName.length() > 16) {
             throw new TooBigException("Couldn't change " + oldName + " to " + newName + " as the new name is too long!");
@@ -71,6 +84,11 @@ public class IdentityCrisis extends JavaPlugin {
         }
     }
 
+    /**
+     * Removes a name change for defined user.
+     * <b>Saved to configuration immediately.</b>
+     * @param oldName
+     */
     public void removeNameChange(String oldName) {
         nameChanges.remove(oldName);
         this.getConfig().set("names." + oldName, null);
@@ -82,10 +100,20 @@ public class IdentityCrisis extends JavaPlugin {
         }
     }
 
+    /**
+     * Returns whether or not there is an active name change for specified user.
+     * @param name
+     * @return
+     */
     public boolean contains(String name) {
         return nameChanges.containsKey(name);
     }
 
+    /**
+     * Returns the changed name for a user, null if not changed.
+     * @param name
+     * @return
+     */
     public String getName(String name) {
         return nameChanges.get(name);
     }
