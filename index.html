@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="IdentityCrisis is a Bukkit plugin which allows users to change their names. It also comes with a developer API. This is it's documentation">
+    <meta name="author" content="jamietech">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IdentityCrisis</title>
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300|Bree+Serif" rel="stylesheet" type="text/css">
+    <link href="assets/css/prettify.css" rel="stylesheet">
+    <!--[if IE]>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:600italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:600" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Bree+Serif:400" rel="stylesheet" type="text/css">
+    <![endif]-->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if IE 7]>
+      <link rel="stylesheet" href="assets/css/ie7.min.css">
+    <![endif]-->
+</head>
+<body>
+    <header class="masthead">
+        <div class="container">
+            <div class="white-space">&nbsp;</div>
+            <h1 class="font-bree-serif">Identity Crisis</h1>
+            <p class="font-open-sans-normal">Simple player name changing with an easy to use API.</p>
+            <p class="jumbo"><a target="_blank" href="https://github.com/jamietech/IdentityCrisis" class="btn btn-inverse btn-large font-open-sans-normal"><strong>View source on GitHub</strong></a> <a target="_blank" href="http://dev.bukkit.org/server-mods/identitycrisis" class="btn btn-success btn-large font-open-sans-normal"><strong>Download on Bukkit </strong><small>(v0.3)</small></a></p>
+            <p class="share"><a target="_blank" href="https://twitter.com/intent/tweet?screen_name=jamietech" class="twitter-mention-button" data-related="jamietech">Tweet to @jamietech</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                <a target="_blank" href="https://twitter.com/share" class="twitter-share-button" data-via="jamietech">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            </p>
+        </div>
+    </header>
+    <div class="main-content">
+        <div class="container">
+            <div class="row" id="content">
+                <div class="span12">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs" id="pluginTab">
+                            <li class="active"><a href="#overview" class="tab">Overview</a></li>
+                            <li><a href="#bukkit" class="tab">Permissions and Commands</a></li>
+                            <li><a href="#dev" class="tab">Developer API</a></li>
+                            <li><a target="_blank" href="https://github.com/jamietech/IdentityCrisis/issues" class="tip" title="jamietech/IdentityCrisis &bull; GitHub Issues">Submit issues</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="overview">
+                                <h1 class="font-bree-serif align-center">Designed for the end-user, administrator &amp; developer</h1>
+                                <h4 class="align-center font-open-sans-normal-italic">Need reasons to use this plugin? Check the features below.</h4>
+                                <br>
+                                <div class="row row-bit">
+                                    <div class="span4">
+                                        <h3>Quick.</h3>
+                                        <p>Installation is as easy as eating pie. Simply download the plugin from Bukkit, move the .jar to the plugins directory of your server, assign permissions (or OP!) and restart the server.</p>
+                                    </div>
+                                    <div class="span4">
+                                        <h3>Persistent.</h3>
+                                        <p>Identity Crisis saves all information to the configuration file (<em>config.yml</em>) which allows name changes to remain cross-restart/reload.</p>
+                                    </div>
+                                    <div class="span4">
+                                        <h3>Lightweight.</h3>
+                                        <p>Ensuring high amounts of memory aren't used, Identity Crisis uses simple methods to keep new names loaded in memory. This ensures that your server runs optimally.</p>
+                                    </div>
+                                </div>
+                                <div class="row row-bit">
+                                    <div class="span4">
+                                        <h3>Open-Source.</h3>
+                                        <p>As Identity Crisis is Open-Source, anyone is able to submit bug-fixes or new features to the <a target="_blank" class="tip" href="https://github.com/jamietech/IdentityCrisis" title="jamietech/IdentityCrisis &bull; GitHub">repo</a> allowing for faster fixes and a tighter community integration.</p>
+                                    </div>
+                                    <div class="span4">
+                                        <h3>Easy.</h3>
+                                        <p>With the small amount of permissions and commands, using Identity Crisis couldn't be easier! More information about usage can be found on the "Usage" tab.</p>
+                                    </div>
+                                    <div class="span4">
+                                        <h3>Tag-API.</h3>
+                                        <p>With only <strong>one</strong> plugin dependency, Tag-API is a good one at that. Developed by mbaxter and always up to date, Tag-API allows me to change the usernames (or <em>'tags'</em>) above players heads to allow the full crisis.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="bukkit">
+                                <div class="row">
+                                    <div class="span6">
+                                        <h2>Commands</h2>
+                                        <br>
+                                        <h3>/changename</h3>
+                                        <p>Command parameters: &lt;old name&gt; &lt;new name&gt;<br>
+                                            Notes: The user doesn't have to be online, thus, the old name must be exact. If the user isn't online, their name change will be assigned on their next join. Colors can also be used in the command with &amp;col-code; styles must be applied before colors. List of colors available <a target="_blank" href="http://wiki.vg/Chat#Colors" class="tip" title="wiki.vg/Chat">here</a>.</p>
+                                        <br>
+                                        <h3>/resetname</h3>
+                                        <p>Command parameters: &lt;old name&gt;<br>
+                                            Notes: The user doesn't have to be online, thus, the old name must be exact. If the user isn't online, their login-name will be their name throughout the server.</p>
+                                    </div>
+                                    <div class="span6">
+                                        <h2>Permissions</h2>
+                                        <br>
+                                        <h3>identitycrisis.use</h3>
+                                        <p>This permission node allows use to all commands. There are no nodes that restrict the viewing of nicknames. Operators have access to this node by default.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="dev">
+                                <h2>Developer API</h2>
+                                <p>The plugin has a developer API which allows you to change players usernames through Bukkit plugins. You are easily able to see if a player has a changed username, get the changed username, change the username, remove the username change and see if they have joined during the session.</p>
+                                <h3>Checking if username is changed</h3>
+                                <pre class="prettyprint linenums">
+IdentityCrisis ic = (IdentityCrisis) this.getServer().getPluginManager().getPlugin("IdentityCrisis");
+boolean nameChanged = ic.getName("jamietech") != null;</pre>
+                                <h3>Getting changed username</h3>
+                                <pre class="prettyprint linenums">
+IdentityCrisis ic = (IdentityCrisis) this.getServer().getPluginManager().getPlugin("IdentityCrisis");
+String newName = ChatColor.translateAlternateColorCodes('&amp;', ic.getName("ammaraskar"));</pre>
+                                <h3>Changing username</h3>
+                                <p>Using IdentityCrisis.chopString(String); 'chops' the string supplied to be 16 characters in length to ensure that the name isn't too long for Minecraft.</p>
+                                <pre class="prettyprint linenums">
+IdentityCrisis ic = (IdentityCrisis) this.getServer().getPluginManager().getPlugin("IdentityCrisis");
+try {
+    ic.addNameChange("I_am_not_funny", ic.chopString(ChatColor.RED + "I_am_not_funny"));
+} catch (TooBigException ex) {
+    // Ignore exception as it won't be fired.
+}</pre>
+                                <h3>Removing username change</h3>
+                                <pre class="prettyprint linenums">
+IdentityCrisis ic = (IdentityCrisis) this.getServer().getPluginManager().getPlugin("IdentityCrisis");
+ic.removeNameChange("mbaxter");</pre>
+                                <h3>Checking if user has joined this session</h3>
+                                <pre class="prettyprint linenums">
+IdentityCrisis ic = (IdentityCrisis) this.getServer().getPluginManager().getPlugin("IdentityCrisis");
+boolean hasJoined = ic.contains("isybub");</pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="well align-center">
+                        <h4>For any queries or issues please <a target="_blank" href="https://github.com/jamietech/IdentityCrisis/issues">submit issues</a> on GitHub or email me <a href="mailto:&#106;&#97;&#109;&#105;&#101;&#64;&#106;&#97;&#109;&#105;&#101;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#46;&#99;&#99;">&#106;&#97;&#109;&#105;&#101;&#64;&#106;&#97;&#109;&#105;&#101;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#46;&#99;&#99;</a></h4>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="span6">
+                    <p>&copy; jamietech 2012. All Rights Reserved</p>
+               </div>
+                <div class="span2 offset4">
+                    <p><a href="#" id="top">Go To Top</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/prettify.js"></script>
+    <script type="text/javascript" src="assets/js/respond.js"></script>
+    <script type="text/javascript">$(function(){window.prettyPrint&&prettyPrint();$("#pluginTab a.tab").click(function(e){e.preventDefault();$(this).tab("show");});$("a.tip").tooltip();gotoTop();function gotoTop(){$("a#top").on("click",function(){$("body,html").animate({scrollTop:0},800);return false;});}});</script>
+</body>
+</html>
