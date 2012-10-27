@@ -117,4 +117,15 @@ public class IdentityCrisis extends JavaPlugin {
     public String getName(String name) {
         return nameChanges.get(name);
     }
+
+    /**
+     * Returns a username that is 16 characters or less.
+     * @param name
+     * @return
+     */
+    public String chopString(String name) {
+        if (name.length() >= 16)
+            return name;
+        return name.substring(0, 16);
+    }
 }
