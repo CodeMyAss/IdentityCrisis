@@ -1,11 +1,11 @@
-package tk.nekotech.identitycrisis.commands;
+package ch.jamiete.identitycrisis.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import tk.nekotech.identitycrisis.IdentityCrisis;
-import tk.nekotech.identitycrisis.exceptions.TooBigException;
+import ch.jamiete.identitycrisis.IdentityCrisis;
+import ch.jamiete.identitycrisis.exceptions.TooBigException;
 
 public class ChangeNameCommand implements CommandExecutor {
     private final IdentityCrisis plugin;

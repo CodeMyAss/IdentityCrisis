@@ -1,10 +1,10 @@
-package tk.nekotech.identitycrisis.listeners;
+package ch.jamiete.identitycrisis.listeners;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
-import tk.nekotech.identitycrisis.IdentityCrisis;
-import tk.nekotech.identitycrisis.exceptions.TooBigException;
+import ch.jamiete.identitycrisis.IdentityCrisis;
+import ch.jamiete.identitycrisis.exceptions.TooBigException;
 
 public class PlayerLogin implements Listener {
     private final IdentityCrisis plugin;

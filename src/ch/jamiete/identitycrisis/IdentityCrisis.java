@@ -1,4 +1,4 @@
-package tk.nekotech.identitycrisis;
+package ch.jamiete.identitycrisis;
 
 import java.util.HashMap;
 import org.bukkit.ChatColor;
@@ -6,11 +6,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.kitteh.tag.TagAPI;
-import tk.nekotech.identitycrisis.commands.ChangeNameCommand;
-import tk.nekotech.identitycrisis.commands.ResetNameCommand;
-import tk.nekotech.identitycrisis.exceptions.TooBigException;
-import tk.nekotech.identitycrisis.listeners.PlayerLogin;
-import tk.nekotech.identitycrisis.listeners.PlayerReceiveNameTag;
+import ch.jamiete.identitycrisis.commands.ChangeNameCommand;
+import ch.jamiete.identitycrisis.commands.ResetNameCommand;
+import ch.jamiete.identitycrisis.exceptions.TooBigException;
+import ch.jamiete.identitycrisis.listeners.PlayerLogin;
+import ch.jamiete.identitycrisis.listeners.PlayerReceiveNameTag;
 
 public class IdentityCrisis extends JavaPlugin {
     private HashMap<String, String> nameChanges;

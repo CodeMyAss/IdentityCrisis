@@ -1,4 +1,4 @@
-package tk.nekotech.identitycrisis.exceptions;
+package ch.jamiete.identitycrisis.exceptions;
 
 public class TooBigException extends Exception {
     private static final long serialVersionUID = 1L;
