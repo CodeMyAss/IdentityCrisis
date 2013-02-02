@@ -53,6 +53,20 @@ public class IdentityCrisis extends JavaPlugin {
      * @param name
      * @return
      */
+    public boolean hasChanged(final String name) {
+        return this.nameChanges.containsKey(name);
+    }
+
+    /**
+     * <b>Deprecated. Use hasChanged(String)</b>
+     * 
+     * <br>
+     * 
+     * Returns whether or not there is an active name change for specified user.
+     * @param name
+     * @return
+     */
+    @Deprecated
     public boolean contains(final String name) {
         return this.nameChanges.containsKey(name);
     }
@@ -86,7 +100,9 @@ public class IdentityCrisis extends JavaPlugin {
     public void onEnable() {
         final PluginManager pm = this.getServer().getPluginManager();
         if (pm.getPlugin("TagAPI") == null) {
-            this.getLogger().severe("FAILED TO FIND TAGAPI. SHUTTING DOWN!");
+            this.getLogger().severe("Oops. I couldn't manage to find TagAPI.");
+            this.getLogger().severe("It is required to use this plugin.");
+            this.getLogger().severe("Download it at http://dev.bukkit.org/server-mods/tag");
             pm.disablePlugin(this);
             return;
         }
@@ -101,7 +117,8 @@ public class IdentityCrisis extends JavaPlugin {
                 try {
                     this.addNameChange(oldName, newName);
                 } catch (final TooBigException e) {
-                    this.getLogger().severe("The new name for " + oldName + " is too long! It can be maximum 16 characters. (" + newName + ")");
+                    this.getLogger().severe("Error while changing name from memory:");
+                    this.getLogger().severe(e.getMessage());
                 }
                 TagAPI.refreshPlayer(player);
             }

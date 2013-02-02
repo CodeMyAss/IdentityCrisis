@@ -21,7 +21,8 @@ public class PlayerLogin implements Listener {
             try {
                 this.plugin.addNameChange(name, newName);
             } catch (final TooBigException e) {
-                this.plugin.getLogger().severe("The new name for " + name + " is too long! It can be maximum 16 characters. (" + newName + ")");
+                this.plugin.getLogger().severe("Error while changing name from memory:");
+                this.plugin.getLogger().severe(e.getMessage());
             }
         }
     }

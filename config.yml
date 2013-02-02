@@ -2,4 +2,15 @@
 # It is automatically generated.
 # Add users with /changename <name> <newname>
 # Remove users with /resetname <name>
+
+############################
+#         NOTICE           #
+# Do NOT change any values #
+# below this box or you    #
+# may cause the plugin to  #
+# stop functioning as      #
+# intended.                #
+# Thanks.                  #
+############################
+
 version: 0.1

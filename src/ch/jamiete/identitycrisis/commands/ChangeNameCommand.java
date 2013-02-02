@@ -5,7 +5,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import ch.jamiete.identitycrisis.IdentityCrisis;
-import ch.jamiete.identitycrisis.exceptions.TooBigException;
 
 public class ChangeNameCommand implements CommandExecutor {
     private final IdentityCrisis plugin;
@@ -24,11 +23,7 @@ public class ChangeNameCommand implements CommandExecutor {
         } else if (args[1].length() > 16) {
             sender.sendMessage(ChatColor.RED + "The new username is too long. 16 characters maximum.");
         } else {
-            try {
-                this.plugin.addNameChange(args[0], args[1]);
-            } catch (final TooBigException e) {
-                e.printStackTrace();
-            }
+            this.plugin.addNameChange(args[0], args[1]);
             sender.sendMessage(ChatColor.GREEN + "Changed username for " + args[0] + "!");
         }
         return true;

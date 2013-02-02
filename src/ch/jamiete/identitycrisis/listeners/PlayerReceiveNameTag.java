@@ -15,11 +15,8 @@ public class PlayerReceiveNameTag implements Listener {
 
     @EventHandler
     public void onPlayerReceiveNametag(final PlayerReceiveNameTagEvent event) {
-        if (event.getPlayer().getName().equals(event.getNamedPlayer().getName())) {
-            return;
-        }
         final String name = event.getNamedPlayer().getName();
-        if (this.plugin.contains(name)) {
+        if (this.plugin.hasChanged(name)) {
             event.setTag(ChatColor.translateAlternateColorCodes('&', this.plugin.getName(name)));
         }
     }
