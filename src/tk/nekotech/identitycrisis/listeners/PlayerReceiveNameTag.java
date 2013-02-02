@@ -7,20 +7,20 @@ import org.kitteh.tag.PlayerReceiveNameTagEvent;
 import tk.nekotech.identitycrisis.IdentityCrisis;
 
 public class PlayerReceiveNameTag implements Listener {
-    private IdentityCrisis plugin;
+    private final IdentityCrisis plugin;
 
-    public PlayerReceiveNameTag(IdentityCrisis plugin) {
+    public PlayerReceiveNameTag(final IdentityCrisis plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onPlayerReceiveNametag(PlayerReceiveNameTagEvent event) {
+    public void onPlayerReceiveNametag(final PlayerReceiveNameTagEvent event) {
         if (event.getPlayer().getName().equals(event.getNamedPlayer().getName())) {
             return;
         }
-        String name = event.getNamedPlayer().getName();
-        if (plugin.contains(name)) {
-            event.setTag(ChatColor.translateAlternateColorCodes('&', plugin.getName(name)));
+        final String name = event.getNamedPlayer().getName();
+        if (this.plugin.contains(name)) {
+            event.setTag(ChatColor.translateAlternateColorCodes('&', this.plugin.getName(name)));
         }
     }
 }

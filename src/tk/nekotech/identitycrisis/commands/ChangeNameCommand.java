@@ -8,14 +8,14 @@ import tk.nekotech.identitycrisis.IdentityCrisis;
 import tk.nekotech.identitycrisis.exceptions.TooBigException;
 
 public class ChangeNameCommand implements CommandExecutor {
-    private IdentityCrisis plugin;
+    private final IdentityCrisis plugin;
 
-    public ChangeNameCommand(IdentityCrisis plugin) {
+    public ChangeNameCommand(final IdentityCrisis plugin) {
         this.plugin = plugin;
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         if (args.length != 2) {
             return false;
         }
@@ -25,8 +25,8 @@ public class ChangeNameCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "The new username is too long. 16 characters maximum.");
         } else {
             try {
-                plugin.addNameChange(args[0], args[1]);
-            } catch (TooBigException e) {
+                this.plugin.addNameChange(args[0], args[1]);
+            } catch (final TooBigException e) {
                 e.printStackTrace();
             }
             sender.sendMessage(ChatColor.GREEN + "Changed username for " + args[0] + "!");

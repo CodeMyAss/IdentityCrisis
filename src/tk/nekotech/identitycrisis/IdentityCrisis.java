@@ -15,41 +15,46 @@ import tk.nekotech.identitycrisis.listeners.PlayerReceiveNameTag;
 public class IdentityCrisis extends JavaPlugin {
     private HashMap<String, String> nameChanges;
 
-    public void onLoad() {
-        String version = this.getConfig().getString("version");
-        if (version == null || version != null && !version.equals("0.1")) {
-            this.getConfig().options().copyDefaults(true);
+    /**
+     * Adds a name change for defined user.
+     * <b>Saved to configuration immediately.</b>
+     * @param oldName
+     * @param newName
+     * @throws TooBigException
+     */
+    public void addNameChange(final String oldName, final String newName) throws TooBigException {
+        if (newName.length() > 16) {
+            throw new TooBigException("Couldn't change " + oldName + " to " + newName + " as the new name is too long!");
         }
-        nameChanges = new HashMap<String, String>();
-    }
-
-    public void onEnable() {
-        PluginManager pm = this.getServer().getPluginManager();
-        if (pm.getPlugin("TagAPI") == null) {
-            getLogger().severe("FAILED TO FIND TAGAPI. SHUTTING DOWN!");
-            pm.disablePlugin(this);
-            return;
-        }
-        pm.registerEvents(new PlayerLogin(this), this);
-        pm.registerEvents(new PlayerReceiveNameTag(this), this);
-        this.getCommand("changename").setExecutor(new ChangeNameCommand(this));
-        this.getCommand("resetname").setExecutor(new ResetNameCommand(this));
-        for (Player player : this.getServer().getOnlinePlayers()) {
-            String oldName = player.getName();
-            String newName = getDefinedName(oldName);
-            if (!newName.equals(oldName)) {
-                try {
-                    addNameChange(oldName, newName);
-                } catch (TooBigException e) {
-                    this.getLogger().severe("The new name for " + oldName + " is too long! It can be maximum 16 characters. (" + newName + ")");
-                }
-                TagAPI.refreshPlayer(player);
-            }
+        this.nameChanges.put(oldName, newName);
+        this.getConfig().set("names." + oldName, newName);
+        this.saveConfig();
+        final Player player = this.getServer().getPlayerExact(oldName);
+        if (player != null) {
+            TagAPI.refreshPlayer(player);
+            player.setPlayerListName(ChatColor.translateAlternateColorCodes('&', newName));
         }
     }
 
-    public void onDisable() {
-        this.getLogger().info("Changed " + nameChanges.size() + " players names this session!");
+    /**
+     * Returns a username that is 16 characters or less.
+     * @param name
+     * @return
+     */
+    public String chopString(final String name) {
+        if (name.length() >= 16) {
+            return name;
+        }
+        return name.substring(0, 16);
+    }
+
+    /**
+     * Returns whether or not there is an active name change for specified user.
+     * @param name
+     * @return
+     */
+    public boolean contains(final String name) {
+        return this.nameChanges.containsKey(name);
     }
 
     /**
@@ -58,55 +63,9 @@ public class IdentityCrisis extends JavaPlugin {
      * @param oldName
      * @return
      */
-    public String getDefinedName(String oldName) {
-        String newName = this.getConfig().getString("names." + oldName);
-        return (newName == null ? oldName : newName);
-    }
-
-    /**
-     * Adds a name change for defined user.
-     * <b>Saved to configuration immediately.</b>
-     * @param oldName
-     * @param newName
-     * @throws TooBigException
-     */
-    public void addNameChange(String oldName, String newName) throws TooBigException {
-        if (newName.length() > 16) {
-            throw new TooBigException("Couldn't change " + oldName + " to " + newName + " as the new name is too long!");
-        }
-        nameChanges.put(oldName, newName);
-        this.getConfig().set("names." + oldName, newName);
-        this.saveConfig();
-        Player player = this.getServer().getPlayerExact(oldName);
-        if (player != null) {
-            TagAPI.refreshPlayer(player);
-            player.setPlayerListName(ChatColor.translateAlternateColorCodes('&', newName));
-        }
-    }
-
-    /**
-     * Removes a name change for defined user.
-     * <b>Saved to configuration immediately.</b>
-     * @param oldName
-     */
-    public void removeNameChange(String oldName) {
-        nameChanges.remove(oldName);
-        this.getConfig().set("names." + oldName, null);
-        this.saveConfig();
-        Player player = this.getServer().getPlayerExact(oldName);
-        if (player != null) {
-            TagAPI.refreshPlayer(player);
-            player.setPlayerListName(oldName);
-        }
-    }
-
-    /**
-     * Returns whether or not there is an active name change for specified user.
-     * @param name
-     * @return
-     */
-    public boolean contains(String name) {
-        return nameChanges.containsKey(name);
+    public String getDefinedName(final String oldName) {
+        final String newName = this.getConfig().getString("names." + oldName);
+        return newName == null ? oldName : newName;
     }
 
     /**
@@ -114,18 +73,63 @@ public class IdentityCrisis extends JavaPlugin {
      * @param name
      * @return
      */
-    public String getName(String name) {
-        return nameChanges.get(name);
+    public String getName(final String name) {
+        return this.nameChanges.get(name);
+    }
+
+    @Override
+    public void onDisable() {
+        this.getLogger().info("Changed " + this.nameChanges.size() + " players names this session!");
+    }
+
+    @Override
+    public void onEnable() {
+        final PluginManager pm = this.getServer().getPluginManager();
+        if (pm.getPlugin("TagAPI") == null) {
+            this.getLogger().severe("FAILED TO FIND TAGAPI. SHUTTING DOWN!");
+            pm.disablePlugin(this);
+            return;
+        }
+        pm.registerEvents(new PlayerLogin(this), this);
+        pm.registerEvents(new PlayerReceiveNameTag(this), this);
+        this.getCommand("changename").setExecutor(new ChangeNameCommand(this));
+        this.getCommand("resetname").setExecutor(new ResetNameCommand(this));
+        for (final Player player : this.getServer().getOnlinePlayers()) {
+            final String oldName = player.getName();
+            final String newName = this.getDefinedName(oldName);
+            if (!newName.equals(oldName)) {
+                try {
+                    this.addNameChange(oldName, newName);
+                } catch (final TooBigException e) {
+                    this.getLogger().severe("The new name for " + oldName + " is too long! It can be maximum 16 characters. (" + newName + ")");
+                }
+                TagAPI.refreshPlayer(player);
+            }
+        }
+    }
+
+    @Override
+    public void onLoad() {
+        final String version = this.getConfig().getString("version");
+        if (version == null || version != null && !version.equals("0.1")) {
+            this.getConfig().options().copyDefaults(true);
+        }
+        this.nameChanges = new HashMap<String, String>();
     }
 
     /**
-     * Returns a username that is 16 characters or less.
-     * @param name
-     * @return
+     * Removes a name change for defined user.
+     * <b>Saved to configuration immediately.</b>
+     * @param oldName
      */
-    public String chopString(String name) {
-        if (name.length() >= 16)
-            return name;
-        return name.substring(0, 16);
+    public void removeNameChange(final String oldName) {
+        this.nameChanges.remove(oldName);
+        this.getConfig().set("names." + oldName, null);
+        this.saveConfig();
+        final Player player = this.getServer().getPlayerExact(oldName);
+        if (player != null) {
+            TagAPI.refreshPlayer(player);
+            player.setPlayerListName(oldName);
+        }
     }
 }
