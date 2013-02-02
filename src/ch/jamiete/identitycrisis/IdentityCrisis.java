@@ -98,6 +98,8 @@ public class IdentityCrisis extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        if (this.getConfig().getBoolean("updatecheck", true))
+            this.getServer().getScheduler().runTaskTimerAsynchronously(this, new Updater(this, "identitycrisis"), 40, 432000);
         final PluginManager pm = this.getServer().getPluginManager();
         if (pm.getPlugin("TagAPI") == null) {
             this.getLogger().severe("Oops. I couldn't manage to find TagAPI.");
@@ -128,7 +130,7 @@ public class IdentityCrisis extends JavaPlugin {
     @Override
     public void onLoad() {
         final String version = this.getConfig().getString("version");
-        if (version == null || version != null && !version.equals("0.1")) {
+        if (version == null || version != null && !version.equals("1.0")) {
             this.getConfig().options().copyDefaults(true);
         }
         this.nameChanges = new HashMap<String, String>();

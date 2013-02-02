@@ -3,6 +3,10 @@
 # Add users with /changename <name> <newname>
 # Remove users with /resetname <name>
 
+# Allow plugin to check for updates?
+#   Disable if paranoid.
+updatecheck: true
+
 ############################
 #         NOTICE           #
 # Do NOT change any values #
