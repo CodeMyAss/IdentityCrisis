@@ -125,11 +125,7 @@ String newName = ChatColor.translateAlternateColorCodes('&amp;', ic.getName("amm
                                 <p>Using IdentityCrisis.chopString(String); 'chops' the string supplied to be 16 characters in length to ensure that the name isn't too long for Minecraft.</p>
                                 <pre class="prettyprint linenums">
 IdentityCrisis ic = (IdentityCrisis) this.getServer().getPluginManager().getPlugin("IdentityCrisis");
-try {
-    ic.addNameChange("I_am_not_funny", ic.chopString(ChatColor.RED + "I_am_not_funny"));
-} catch (TooBigException ex) {
-    // Ignore exception as it won't be fired.
-}</pre>
+ic.addNameChange("I_am_not_funny", ic.chopString(ChatColor.RED + "I_am_not_funny"));</pre>
                                 <h3>Removing username change</h3>
                                 <pre class="prettyprint linenums">
 IdentityCrisis ic = (IdentityCrisis) this.getServer().getPluginManager().getPlugin("IdentityCrisis");
