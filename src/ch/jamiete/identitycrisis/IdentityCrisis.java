@@ -42,7 +42,7 @@ public class IdentityCrisis extends JavaPlugin {
      * @return
      */
     public String chopString(final String name) {
-        if (name.length() >= 16) {
+        if (name.length() <= 16) {
             return name;
         }
         return name.substring(0, 16);
