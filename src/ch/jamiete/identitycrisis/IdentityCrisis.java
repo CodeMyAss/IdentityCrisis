@@ -9,11 +9,13 @@ import org.kitteh.tag.TagAPI;
 import ch.jamiete.identitycrisis.commands.ChangeNameCommand;
 import ch.jamiete.identitycrisis.commands.ResetNameCommand;
 import ch.jamiete.identitycrisis.exceptions.TooBigException;
+import ch.jamiete.identitycrisis.listeners.BorderControl;
 import ch.jamiete.identitycrisis.listeners.PlayerLogin;
 import ch.jamiete.identitycrisis.listeners.PlayerReceiveNameTag;
 
 public class IdentityCrisis extends JavaPlugin {
     private HashMap<String, String> nameChanges;
+    private boolean changeTab = true, changeChat = false;
 
     /**
      * Adds a name change for defined user.
@@ -26,13 +28,22 @@ public class IdentityCrisis extends JavaPlugin {
         if (newName.length() > 16) {
             throw new TooBigException("Couldn't change " + oldName + " to " + newName + " as the new name is too long!");
         }
+
         this.nameChanges.put(oldName, newName);
         this.getConfig().set("names." + oldName, newName);
         this.saveConfig();
+
         final Player player = this.getServer().getPlayerExact(oldName);
         if (player != null) {
             TagAPI.refreshPlayer(player);
-            player.setPlayerListName(ChatColor.translateAlternateColorCodes('&', newName));
+
+            if (this.changeTab) {
+                player.setPlayerListName(ChatColor.translateAlternateColorCodes('&', newName));
+            }
+
+            if (this.changeChat) {
+                player.setDisplayName(ChatColor.translateAlternateColorCodes('&', newName) + ChatColor.WHITE);
+            }
         }
     }
 
@@ -46,15 +57,6 @@ public class IdentityCrisis extends JavaPlugin {
             return name;
         }
         return name.substring(0, 16);
-    }
-
-    /**
-     * Returns whether or not there is an active name change for specified user.
-     * @param name
-     * @return
-     */
-    public boolean hasChanged(final String name) {
-        return this.nameChanges.containsKey(name);
     }
 
     /**
@@ -91,6 +93,15 @@ public class IdentityCrisis extends JavaPlugin {
         return this.nameChanges.get(name);
     }
 
+    /**
+     * Returns whether or not there is an active name change for specified user.
+     * @param name
+     * @return
+     */
+    public boolean hasChanged(final String name) {
+        return this.nameChanges.containsKey(name);
+    }
+
     @Override
     public void onDisable() {
         this.getLogger().info("Changed " + this.nameChanges.size() + " players names this session!");
@@ -98,8 +109,10 @@ public class IdentityCrisis extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if (this.getConfig().getBoolean("updatecheck", true))
+        if (this.getConfig().getBoolean("updatecheck", true)) {
             this.getServer().getScheduler().runTaskTimerAsynchronously(this, new Updater(this, "identitycrisis"), 40, 432000);
+        }
+
         final PluginManager pm = this.getServer().getPluginManager();
         if (pm.getPlugin("TagAPI") == null) {
             this.getLogger().severe("Oops. I couldn't manage to find TagAPI.");
@@ -108,10 +121,20 @@ public class IdentityCrisis extends JavaPlugin {
             pm.disablePlugin(this);
             return;
         }
+
         pm.registerEvents(new PlayerLogin(this), this);
         pm.registerEvents(new PlayerReceiveNameTag(this), this);
+
+        if (this.getConfig().getBoolean("bordercontrol", false)) {
+            pm.registerEvents(new BorderControl(this), this);
+        }
+
+        this.changeChat = this.getConfig().getBoolean("changechat", false);
+        this.changeTab = this.getConfig().getBoolean("changeplayerlist", true);
+
         this.getCommand("changename").setExecutor(new ChangeNameCommand(this));
         this.getCommand("resetname").setExecutor(new ResetNameCommand(this));
+
         for (final Player player : this.getServer().getOnlinePlayers()) {
             final String oldName = player.getName();
             final String newName = this.getDefinedName(oldName);
@@ -130,9 +153,11 @@ public class IdentityCrisis extends JavaPlugin {
     @Override
     public void onLoad() {
         final String version = this.getConfig().getString("version");
-        if (version == null || version != null && !version.equals("1.0")) {
+
+        if (version == null || version != null && !version.equals("1.1")) {
             this.getConfig().options().copyDefaults(true);
         }
+
         this.nameChanges = new HashMap<String, String>();
     }
 
@@ -145,10 +170,18 @@ public class IdentityCrisis extends JavaPlugin {
         this.nameChanges.remove(oldName);
         this.getConfig().set("names." + oldName, null);
         this.saveConfig();
+
         final Player player = this.getServer().getPlayerExact(oldName);
         if (player != null) {
             TagAPI.refreshPlayer(player);
-            player.setPlayerListName(oldName);
+
+            if (this.changeTab) {
+                player.setPlayerListName(oldName);
+            }
+
+            if (this.changeChat) {
+                player.setDisplayName(oldName);
+            }
         }
     }
 }

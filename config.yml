@@ -7,6 +7,18 @@
 #   Disable if paranoid.
 updatecheck: true
 
+# Change players' names in join and quit messages?
+#   May be overriden by other plugins if enabled.
+bordercontrol: false
+
+# Change players' names in chat messages?
+#   May be overriden by other plugins if enabled.
+changechat: false
+
+# Change players' names in the player list (the 'tab list')
+#   May be overriden by other plugins if enabled.
+changeplayerlist: true 
+
 ############################
 #         NOTICE           #
 # Do NOT change any values #
@@ -17,4 +29,4 @@ updatecheck: true
 # Thanks.                  #
 ############################
 
-version: 1.0
+version: 1.1
