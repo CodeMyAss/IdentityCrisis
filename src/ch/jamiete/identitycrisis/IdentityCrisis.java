@@ -60,20 +60,6 @@ public class IdentityCrisis extends JavaPlugin {
     }
 
     /**
-     * <b>Deprecated. Use hasChanged(String)</b>
-     * 
-     * <br>
-     * 
-     * Returns whether or not there is an active name change for specified user.
-     * @param name
-     * @return
-     */
-    @Deprecated
-    public boolean contains(final String name) {
-        return this.nameChanges.containsKey(name);
-    }
-
-    /**
      * Returns the defined name of the user.
      * If not set, returns normal name.
      * @param oldName
