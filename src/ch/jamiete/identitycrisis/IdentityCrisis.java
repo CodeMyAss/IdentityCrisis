@@ -95,10 +95,6 @@ public class IdentityCrisis extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if (this.getConfig().getBoolean("updatecheck", true)) {
-            this.getServer().getScheduler().runTaskTimerAsynchronously(this, new Updater(this, "identitycrisis"), 40, 432000);
-        }
-
         final PluginManager pm = this.getServer().getPluginManager();
         if (pm.getPlugin("TagAPI") == null) {
             this.getLogger().severe("Oops. I couldn't manage to find TagAPI.");

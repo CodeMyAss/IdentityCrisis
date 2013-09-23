@@ -3,10 +3,6 @@
 # Add users with /changename <name> <newname>
 # Remove users with /resetname <name>
 
-# Allow plugin to check for updates?
-#   Disable if paranoid.
-updatecheck: true
-
 # Change players' names in join and quit messages?
 #   May be overriden by other plugins if enabled.
 bordercontrol: false
