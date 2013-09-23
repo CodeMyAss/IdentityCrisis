@@ -23,7 +23,7 @@ public class ChangeNameCommand implements CommandExecutor {
         } else if (args[1].length() > 16) {
             sender.sendMessage(ChatColor.RED + "The new username is too long. 16 characters maximum.");
         } else {
-            this.plugin.addNameChange(args[0], args[1]);
+            this.plugin.getNameManager().addRename(args[0], args[1]);
             sender.sendMessage(ChatColor.GREEN + "Changed username for " + args[0] + "!");
         }
         return true;

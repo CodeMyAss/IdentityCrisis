@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import ch.jamiete.identitycrisis.IdentityCrisis;
 
+// Changes the player's name in flow messages
 public class BorderControl implements Listener {
     private final IdentityCrisis plugin;
 
@@ -17,7 +18,8 @@ public class BorderControl implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(final PlayerJoinEvent event) {
         final String name = event.getPlayer().getName();
-        final String newName = this.plugin.getDefinedName(name);
+        final String newName = this.plugin.getNameManager().getChanged(name);
+
         if (newName != null) {
             event.setJoinMessage(event.getJoinMessage().replace(name, newName));
         }
@@ -26,7 +28,8 @@ public class BorderControl implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerQuit(final PlayerQuitEvent event) {
         final String name = event.getPlayer().getName();
-        final String newName = this.plugin.getDefinedName(name);
+        final String newName = this.plugin.getNameManager().getChanged(name);
+
         if (newName != null) {
             event.setQuitMessage(event.getQuitMessage().replace(name, newName));
         }

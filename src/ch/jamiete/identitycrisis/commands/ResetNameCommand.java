@@ -21,7 +21,7 @@ public class ResetNameCommand implements CommandExecutor {
         if (args[0].length() > 16) {
             sender.sendMessage(ChatColor.RED + "That username is too large to be a players!");
         } else {
-            this.plugin.removeNameChange(args[0]);
+            this.plugin.getNameManager().removeRename(args[0]);
             sender.sendMessage(ChatColor.GREEN + "Reset username for " + args[0] + "!");
         }
         return true;
