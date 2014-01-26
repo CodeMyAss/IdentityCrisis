@@ -3,6 +3,7 @@ version: 1.2
 author: jamietech
 website: http://jamiete.ch
 main: ch.jamiete.identitycrisis.IdentityCrisis
+softdepend: [TagAPI]
 
 commands:
   changename:
