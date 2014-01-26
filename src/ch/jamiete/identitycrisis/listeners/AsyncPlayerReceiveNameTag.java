@@ -3,23 +3,20 @@ package ch.jamiete.identitycrisis.listeners;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.kitteh.tag.PlayerReceiveNameTagEvent;
+import org.kitteh.tag.AsyncPlayerReceiveNameTagEvent;
 import ch.jamiete.identitycrisis.IdentityCrisis;
 
-/**
- * Deprecated. Staying in for 1 TagAPI version.
- */
-@Deprecated
-public class PlayerReceiveNameTag implements Listener {
+public class AsyncPlayerReceiveNameTag implements Listener {
     private final IdentityCrisis plugin;
 
-    public PlayerReceiveNameTag(final IdentityCrisis plugin) {
+    public AsyncPlayerReceiveNameTag(final IdentityCrisis plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onPlayerReceiveNametag(final PlayerReceiveNameTagEvent event) {
+    public void onPlayerReceiveNametag(final AsyncPlayerReceiveNameTagEvent event) {
         final String name = event.getNamedPlayer().getName();
+
         if (this.plugin.hasChanged(name)) {
             event.setTag(ChatColor.translateAlternateColorCodes('&', this.plugin.getName(name)));
         }

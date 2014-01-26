@@ -1,6 +1,6 @@
 package ch.jamiete.identitycrisis;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -9,12 +9,13 @@ import org.kitteh.tag.TagAPI;
 import ch.jamiete.identitycrisis.commands.ChangeNameCommand;
 import ch.jamiete.identitycrisis.commands.ResetNameCommand;
 import ch.jamiete.identitycrisis.exceptions.TooBigException;
+import ch.jamiete.identitycrisis.listeners.AsyncPlayerReceiveNameTag;
 import ch.jamiete.identitycrisis.listeners.BorderControl;
 import ch.jamiete.identitycrisis.listeners.PlayerLogin;
 import ch.jamiete.identitycrisis.listeners.PlayerReceiveNameTag;
 
 public class IdentityCrisis extends JavaPlugin {
-    private HashMap<String, String> nameChanges;
+    private ConcurrentHashMap<String, String> nameChanges;
     private boolean changeTab = true, changeChat = false;
 
     /**
@@ -96,6 +97,7 @@ public class IdentityCrisis extends JavaPlugin {
     @Override
     public void onEnable() {
         final PluginManager pm = this.getServer().getPluginManager();
+
         if (pm.getPlugin("TagAPI") == null) {
             this.getLogger().severe("Oops. I couldn't manage to find TagAPI.");
             this.getLogger().severe("It is required to use this plugin.");
@@ -104,8 +106,24 @@ public class IdentityCrisis extends JavaPlugin {
             return;
         }
 
+        boolean async = true;
+
+        try {
+            Class.forName("org.kitteh.tag.AsyncPlayerReceiveNameTagEvent");
+        } catch (final ClassNotFoundException e) {
+            async = false;
+            this.getLogger().severe("Oops. Your TagAPI is outdated!");
+            this.getLogger().severe("Please update it for a faster version of this plugin.");
+            this.getLogger().severe("Download it at http://dev.bukkit.org/server-mods/tag");
+        }
+
         pm.registerEvents(new PlayerLogin(this), this);
-        pm.registerEvents(new PlayerReceiveNameTag(this), this);
+
+        if (async) {
+            pm.registerEvents(new AsyncPlayerReceiveNameTag(this), this);
+        } else {
+            pm.registerEvents(new PlayerReceiveNameTag(this), this);
+        }
 
         if (this.getConfig().getBoolean("bordercontrol", false)) {
             pm.registerEvents(new BorderControl(this), this);
@@ -140,7 +158,7 @@ public class IdentityCrisis extends JavaPlugin {
             this.getConfig().options().copyDefaults(true);
         }
 
-        this.nameChanges = new HashMap<String, String>();
+        this.nameChanges = new ConcurrentHashMap<String, String>();
     }
 
     /**
