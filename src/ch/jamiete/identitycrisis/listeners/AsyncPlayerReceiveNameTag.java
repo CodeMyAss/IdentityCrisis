@@ -17,8 +17,8 @@ public class AsyncPlayerReceiveNameTag implements Listener {
     public void onPlayerReceiveNametag(final AsyncPlayerReceiveNameTagEvent event) {
         final String name = event.getNamedPlayer().getName();
 
-        if (this.plugin.hasChanged(name)) {
-            event.setTag(ChatColor.translateAlternateColorCodes('&', this.plugin.getName(name)));
+        if (this.plugin.getManager().hasChanged(name)) {
+            event.setTag(ChatColor.translateAlternateColorCodes('&', this.plugin.getManager().getName(name)));
         }
     }
 }

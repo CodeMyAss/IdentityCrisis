@@ -16,10 +16,10 @@ public class PlayerLogin implements Listener {
     @EventHandler
     public void onPlayerLogin(final PlayerLoginEvent event) {
         final String name = event.getPlayer().getName();
-        final String newName = this.plugin.getDefinedName(name);
+        final String newName = this.plugin.getManager().getDefinedName(name);
         if (newName != null) {
             try {
-                this.plugin.addNameChange(name, newName);
+                this.plugin.getManager().addNameChange(name, newName);
             } catch (final TooBigException e) {
                 this.plugin.getLogger().severe("Error while changing name from memory:");
                 this.plugin.getLogger().severe(e.getMessage());

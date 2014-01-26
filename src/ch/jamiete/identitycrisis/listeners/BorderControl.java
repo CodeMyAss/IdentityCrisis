@@ -17,7 +17,8 @@ public class BorderControl implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(final PlayerJoinEvent event) {
         final String name = event.getPlayer().getName();
-        final String newName = this.plugin.getDefinedName(name);
+        final String newName = this.plugin.getManager().getDefinedName(name);
+
         if (newName != null) {
             event.setJoinMessage(event.getJoinMessage().replace(name, newName));
         }
@@ -26,7 +27,8 @@ public class BorderControl implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerQuit(final PlayerQuitEvent event) {
         final String name = event.getPlayer().getName();
-        final String newName = this.plugin.getDefinedName(name);
+        final String newName = this.plugin.getManager().getDefinedName(name);
+
         if (newName != null) {
             event.setQuitMessage(event.getQuitMessage().replace(name, newName));
         }
