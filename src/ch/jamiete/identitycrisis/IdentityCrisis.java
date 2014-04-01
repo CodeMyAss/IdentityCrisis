@@ -9,8 +9,6 @@ import ch.jamiete.identitycrisis.commands.ResetNameCommand;
 import ch.jamiete.identitycrisis.exceptions.TooBigException;
 import ch.jamiete.identitycrisis.listeners.AsyncPlayerReceiveNameTag;
 import ch.jamiete.identitycrisis.listeners.BorderControl;
-import ch.jamiete.identitycrisis.listeners.PlayerLogin;
-import ch.jamiete.identitycrisis.listeners.PlayerReceiveNameTag;
 
 public class IdentityCrisis extends JavaPlugin {
     protected boolean changeTab = true, changeChat = false;
@@ -43,24 +41,7 @@ public class IdentityCrisis extends JavaPlugin {
             return;
         }
 
-        boolean async = true;
-
-        try {
-            Class.forName("org.kitteh.tag.AsyncPlayerReceiveNameTagEvent");
-        } catch (final ClassNotFoundException e) {
-            async = false;
-            this.getLogger().severe("Oops. Your TagAPI is outdated!");
-            this.getLogger().severe("Please update it for a faster version of this plugin.");
-            this.getLogger().severe("Download it at http://dev.bukkit.org/server-mods/tag");
-        }
-
-        pm.registerEvents(new PlayerLogin(this), this);
-
-        if (async) {
-            pm.registerEvents(new AsyncPlayerReceiveNameTag(this), this);
-        } else {
-            pm.registerEvents(new PlayerReceiveNameTag(this), this);
-        }
+        pm.registerEvents(new AsyncPlayerReceiveNameTag(this), this);
 
         if (this.getConfig().getBoolean("bordercontrol", false)) {
             pm.registerEvents(new BorderControl(this), this);
