@@ -1,5 +1,6 @@
 package ch.jamiete.identitycrisis;
 
+import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -54,11 +55,11 @@ public class IdentityCrisis extends JavaPlugin {
         this.getCommand("resetname").setExecutor(new ResetNameCommand(this));
 
         for (final Player player : this.getServer().getOnlinePlayers()) {
-            final String oldName = player.getName();
-            final String newName = this.getManager().getDefinedName(oldName);
-            if (!newName.equals(oldName)) {
+            final UUID uuid = player.getUniqueId();
+            final String newName = this.getManager().getDefinedName(uuid);
+            if (!newName.equals(player.getName())) {
                 try {
-                    this.getManager().addNameChange(oldName, newName);
+                    this.getManager().addNameChange(uuid, newName);
                 } catch (final TooBigException e) {
                     this.getLogger().severe("Error while changing name from memory:");
                     this.getLogger().severe(e.getMessage());

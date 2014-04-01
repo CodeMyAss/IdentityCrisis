@@ -1,5 +1,6 @@
 package ch.jamiete.identitycrisis.listeners;
 
+import java.util.UUID;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -15,11 +16,11 @@ public class PlayerLogin implements Listener {
 
     @EventHandler
     public void onPlayerLogin(final PlayerLoginEvent event) {
-        final String name = event.getPlayer().getName();
-        final String newName = this.plugin.getManager().getDefinedName(name);
+        final UUID uuid = event.getPlayer().getUniqueId();
+        final String newName = this.plugin.getManager().getDefinedName(uuid);
         if (newName != null) {
             try {
-                this.plugin.getManager().addNameChange(name, newName);
+                this.plugin.getManager().addNameChange(uuid, newName);
             } catch (final TooBigException e) {
                 this.plugin.getLogger().severe("Error while changing name from memory:");
                 this.plugin.getLogger().severe(e.getMessage());

@@ -1,5 +1,6 @@
 package ch.jamiete.identitycrisis;
 
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -8,7 +9,7 @@ import ch.jamiete.identitycrisis.exceptions.TooBigException;
 
 public class PeopleManager {
     private final IdentityCrisis plugin;
-    private final ConcurrentHashMap<String, String> nameChanges = new ConcurrentHashMap<String, String>();
+    private final ConcurrentHashMap<UUID, String> nameChanges = new ConcurrentHashMap<UUID, String>();
 
     public PeopleManager(IdentityCrisis plugin) {
         this.plugin = plugin;
@@ -25,20 +26,20 @@ public class PeopleManager {
     /**
      * Adds a name change for defined user.
      * <b>Saved to configuration immediately.</b>
-     * @param oldName
+     * @param uuid
      * @param newName
      * @throws TooBigException
      */
-    public void addNameChange(final String oldName, final String newName) throws TooBigException {
+    public void addNameChange(final UUID uuid, final String newName) throws TooBigException {
         if (newName.length() > 16) {
-            throw new TooBigException("Couldn't change " + oldName + " to " + newName + " as the new name is too long!");
+            throw new TooBigException("Couldn't change " + uuid + " to " + newName + " as the new name is too long!");
         }
 
-        this.nameChanges.put(oldName, newName);
-        this.plugin.getConfig().set("names." + oldName, newName);
+        this.nameChanges.put(uuid, newName);
+        this.plugin.getConfig().set("names." + uuid, newName);
         this.plugin.saveConfig();
 
-        final Player player = this.plugin.getServer().getPlayerExact(oldName);
+        final Player player = this.plugin.getServer().getPlayer(uuid);
         if (player != null) {
             TagAPI.refreshPlayer(player);
 
@@ -66,22 +67,22 @@ public class PeopleManager {
 
     /**
      * Returns the defined name of the user.
-     * If not set, returns normal name.
+     * If not set, returns null.
      * @param oldName
      * @return
      */
-    public String getDefinedName(final String oldName) {
-        final String newName = this.plugin.getConfig().getString("names." + oldName);
-        return newName == null ? oldName : newName;
+    public String getDefinedName(final UUID uuid) {
+        ;
+        return this.plugin.getConfig().getString("names." + uuid);
     }
 
     /**
      * Returns the changed name for a user, null if not changed.
-     * @param name
+     * @param uuid
      * @return
      */
-    public String getName(final String name) {
-        return this.nameChanges.get(name);
+    public String getName(final UUID uuid) {
+        return this.nameChanges.get(uuid);
     }
 
     /**
@@ -89,8 +90,8 @@ public class PeopleManager {
      * @param name
      * @return
      */
-    public boolean hasChanged(final String name) {
-        return this.nameChanges.containsKey(name);
+    public boolean hasChanged(final UUID uuid) {
+        return this.nameChanges.containsKey(uuid);
     }
 
     /**
@@ -98,21 +99,21 @@ public class PeopleManager {
      * <b>Saved to configuration immediately.</b>
      * @param oldName
      */
-    public void removeNameChange(final String oldName) {
-        this.nameChanges.remove(oldName);
-        this.plugin.getConfig().set("names." + oldName, null);
+    public void removeNameChange(final UUID uuid) {
+        this.nameChanges.remove(uuid);
+        this.plugin.getConfig().set("names." + uuid, null);
         this.plugin.saveConfig();
 
-        final Player player = this.plugin.getServer().getPlayerExact(oldName);
+        final Player player = this.plugin.getServer().getPlayer(uuid);
         if (player != null) {
             TagAPI.refreshPlayer(player);
 
             if (this.plugin.changeTab) {
-                player.setPlayerListName(oldName);
+                player.setPlayerListName(player.getName());
             }
 
             if (this.plugin.changeChat) {
-                player.setDisplayName(oldName);
+                player.setDisplayName(player.getName());
             }
         }
     }

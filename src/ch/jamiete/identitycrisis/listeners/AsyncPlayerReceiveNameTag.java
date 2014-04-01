@@ -1,5 +1,6 @@
 package ch.jamiete.identitycrisis.listeners;
 
+import java.util.UUID;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,10 +16,10 @@ public class AsyncPlayerReceiveNameTag implements Listener {
 
     @EventHandler
     public void onPlayerReceiveNametag(final AsyncPlayerReceiveNameTagEvent event) {
-        final String name = event.getNamedPlayer().getName();
+        final UUID uuid = event.getNamedPlayer().getUniqueId();
 
-        if (this.plugin.getManager().hasChanged(name)) {
-            event.setTag(ChatColor.translateAlternateColorCodes('&', this.plugin.getManager().getName(name)));
+        if (this.plugin.getManager().hasChanged(uuid)) {
+            event.setTag(ChatColor.translateAlternateColorCodes('&', this.plugin.getManager().getName(uuid)));
         }
     }
 }

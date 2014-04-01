@@ -1,5 +1,6 @@
 package ch.jamiete.identitycrisis.listeners;
 
+import java.util.UUID;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -16,21 +17,21 @@ public class BorderControl implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(final PlayerJoinEvent event) {
-        final String name = event.getPlayer().getName();
-        final String newName = this.plugin.getManager().getDefinedName(name);
+        final UUID uuid = event.getPlayer().getUniqueId();
+        final String newName = this.plugin.getManager().getDefinedName(uuid);
 
         if (newName != null) {
-            event.setJoinMessage(event.getJoinMessage().replace(name, newName));
+            event.setJoinMessage(event.getJoinMessage().replace(event.getPlayer().getName(), newName));
         }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerQuit(final PlayerQuitEvent event) {
-        final String name = event.getPlayer().getName();
-        final String newName = this.plugin.getManager().getDefinedName(name);
+        final UUID uuid = event.getPlayer().getUniqueId();
+        final String newName = this.plugin.getManager().getDefinedName(uuid);
 
         if (newName != null) {
-            event.setQuitMessage(event.getQuitMessage().replace(name, newName));
+            event.setQuitMessage(event.getQuitMessage().replace(event.getPlayer().getName(), newName));
         }
     }
 

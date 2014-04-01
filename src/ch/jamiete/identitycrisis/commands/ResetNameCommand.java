@@ -1,5 +1,6 @@
 package ch.jamiete.identitycrisis.commands;
 
+import java.util.UUID;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,11 +19,21 @@ public class ResetNameCommand implements CommandExecutor {
         if (args.length != 1) {
             return false;
         }
-        if (args[0].length() > 16) {
-            sender.sendMessage(ChatColor.RED + "That username is too large to be a players!");
+
+        if (args[0].length() != 32) {
+            sender.sendMessage(ChatColor.RED + "Invalid UUID specified.");
         } else {
-            this.plugin.getManager().removeNameChange(args[0]);
-            sender.sendMessage(ChatColor.GREEN + "Reset username for " + args[0] + "!");
+            UUID uuid;
+
+            try {
+                uuid = UUID.fromString(args[0]);
+            } catch (IllegalArgumentException e) {
+                sender.sendMessage(ChatColor.RED + "Invalid UUID specified.");
+                return true;
+            }
+
+            this.plugin.getManager().removeNameChange(uuid);
+            sender.sendMessage(ChatColor.GREEN + "Reset username for " + uuid + "!");
         }
         return true;
     }
