@@ -42,6 +42,10 @@ public class IdentityCrisis extends JavaPlugin {
             return;
         }
 
+        if (!this.getConfig().getBoolean("updated", false)) {
+            this.getServer().getScheduler().runTaskAsynchronously(this, new UUIDUpdater(this));
+        }
+
         pm.registerEvents(new AsyncPlayerReceiveNameTag(this), this);
 
         if (this.getConfig().getBoolean("bordercontrol", false)) {
